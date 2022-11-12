@@ -12,11 +12,12 @@ import java.util.*
 
 class DetailsActivity : AppCompatActivity(), ViewDetailsContract {
 
-    private val presenter: PresenterDetailsContract = DetailsPresenter(this)
+    private val presenter: PresenterDetailsContract = DetailsPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
+        presenter.onAttach(this)
         setUI()
     }
 
@@ -26,6 +27,11 @@ class DetailsActivity : AppCompatActivity(), ViewDetailsContract {
         setCountText(count)
         decrementButton.setOnClickListener { presenter.onDecrement() }
         incrementButton.setOnClickListener { presenter.onIncrement() }
+    }
+
+    override fun onDestroy() {
+        presenter.onDetach()
+        super.onDestroy()
     }
 
     override fun setCount(count: Int) {
