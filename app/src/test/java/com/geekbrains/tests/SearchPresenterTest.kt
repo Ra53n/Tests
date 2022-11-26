@@ -28,9 +28,10 @@ class SearchPresenterTest {
     fun setUp() {
         //Обязательно для аннотаций "@Mock"
         //Раньше было @RunWith(MockitoJUnitRunner.class) в аннотации к самому классу (SearchPresenterTest)
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
         //Создаем Презентер, используя моки Репозитория и Вью, проинициализированные строкой выше
-        presenter = SearchPresenter(viewContract, repository)
+        presenter = SearchPresenter(repository)
+        presenter.onAttach(viewContract)
     }
 
     @Test //Проверим вызов метода searchGitHub() у нашего Репозитория
@@ -148,5 +149,37 @@ class SearchPresenterTest {
 
         //Убеждаемся, что ответ от сервера обрабатывается корректно
         verify(viewContract, times(1)).displaySearchResults(searchResults, 101)
+    }
+
+    @Test
+    fun onDetachDisplayResultPresenter_Test() {
+        val response = mock(Response::class.java) as Response<SearchResponse?>
+        val searchResponse = mock(SearchResponse::class.java)
+        val searchResults = listOf(mock(SearchResult::class.java))
+
+        `when`(response.isSuccessful).thenReturn(true)
+        `when`(response.body()).thenReturn(searchResponse)
+        `when`(searchResponse.searchResults).thenReturn(searchResults)
+        `when`(searchResponse.totalCount).thenReturn(101)
+        presenter.onDetach()
+        presenter.handleGitHubResponse(response)
+        verify(viewContract, times(0)).displaySearchResults(searchResults, 101)
+    }
+
+    @Test
+    fun onDetachHandleGitHubError_Test() {
+        presenter.onDetach()
+        presenter.handleGitHubError()
+        verify(viewContract, times(0)).displayError()
+    }
+
+    @Test
+    fun onDetachHandleGitHubResponse_Test() {
+        val response = mock(Response::class.java) as Response<SearchResponse?>
+        `when`(response.isSuccessful).thenReturn(false)
+        presenter.onDetach()
+        presenter.handleGitHubResponse(response)
+        verify(viewContract, times(0))
+            .displayError("Response is null or unsuccessful")
     }
 }
