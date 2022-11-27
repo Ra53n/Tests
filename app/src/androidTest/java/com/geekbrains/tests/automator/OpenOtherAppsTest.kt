@@ -12,7 +12,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-@SdkSuppress(minSdkVersion = 18)
 class OpenOtherAppsTest {
 
     private val uiDevice: UiDevice = UiDevice.getInstance(getInstrumentation())
