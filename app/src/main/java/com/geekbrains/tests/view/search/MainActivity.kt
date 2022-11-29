@@ -33,6 +33,13 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         }
         setQueryListener()
         setRecyclerView()
+        initSearchButton()
+    }
+
+    private fun initSearchButton() {
+        searchButton.setOnClickListener {
+            presenter.searchGitHub(searchEditText.text.toString())
+        }
     }
 
     private fun setRecyclerView() {
