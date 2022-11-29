@@ -1,0 +1,8 @@
+package com.geekbrains.tests
+
+//Нельзя получить эти ресурсы в android test. Этот баг все еще не исправлен.
+internal const val TEST_NUMBER = 42
+internal const val TEST_NUMBER_OF_RESULTS_ZERO = "Number of results: 0"
+internal const val TEST_NUMBER_OF_RESULTS_PLUS_1 = "Number of results: 1"
+internal const val TEST_NUMBER_OF_RESULTS_MINUS_1 = "Number of results: -1"
+
