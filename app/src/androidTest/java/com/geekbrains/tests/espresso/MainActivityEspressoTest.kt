@@ -38,7 +38,7 @@ class MainActivityEspressoTest {
             onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 42")))
         } else {
             onView(isRoot()).perform(delay())
-            onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 3394")))
+            onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 3420")))
         }
     }
 
