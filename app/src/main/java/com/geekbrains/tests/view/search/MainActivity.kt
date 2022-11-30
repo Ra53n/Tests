@@ -16,7 +16,10 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), ViewSearchContract {
 
-    private val adapter = SearchResultAdapter()
+    private val adapter = SearchResultAdapter { itemText ->
+        searchEditText.setText(itemText)
+        presenter.searchGitHub(itemText)
+    }
     private val presenter: PresenterSearchContract by inject()
     private var totalCount: Int = 0
 
