@@ -12,6 +12,7 @@ import com.geekbrains.tests.presenter.search.PresenterSearchContract
 import com.geekbrains.tests.view.details.DetailsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class MainActivity : AppCompatActivity(), ViewSearchContract {
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         searchEditText.setText(itemText)
         presenter.searchGitHub(itemText)
     }
-    private val presenter: PresenterSearchContract by inject()
+    private val presenter: SearchViewModel by viewModel()
     private var totalCount: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {

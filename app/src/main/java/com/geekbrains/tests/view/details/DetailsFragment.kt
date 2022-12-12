@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.geekbrains.tests.R
-import com.geekbrains.tests.presenter.details.PresenterDetailsContract
 import kotlinx.android.synthetic.main.fragment_details.*
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class DetailsFragment : Fragment(), ViewDetailsContract {
 
-    private val presenter: PresenterDetailsContract by inject()
+    private val viewModel: DetailsViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,16 +24,19 @@ class DetailsFragment : Fragment(), ViewDetailsContract {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.onAttach(this)
+        viewModel.onAttach(this)
+        viewModel.countLiveData.observe(viewLifecycleOwner) {
+            setCountText(it)
+        }
         setUI()
     }
 
     private fun setUI() {
         val counter = arguments?.getInt(TOTAL_COUNT_EXTRA, 0)
-        presenter.setCounter(counter ?: 0)
+        viewModel.setCounter(counter ?: 0)
         setCountText(counter ?: 0)
-        decrementButton.setOnClickListener { presenter.onDecrement() }
-        incrementButton.setOnClickListener { presenter.onIncrement() }
+        decrementButton.setOnClickListener { viewModel.onDecrement() }
+        incrementButton.setOnClickListener { viewModel.onIncrement() }
     }
 
     override fun setCount(count: Int) {
