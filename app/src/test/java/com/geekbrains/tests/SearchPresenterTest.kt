@@ -35,7 +35,7 @@ class SearchPresenterTest {
         MockitoAnnotations.initMocks(this)
         //Создаем Презентер, используя моки Репозитория и Вью, проинициализированные строкой выше
         presenter = SearchPresenter(repository, schedulerProvider)
-        presenter.onAttach(viewContract)
+        //presenter.onAttach(viewContract)
     }
 
     @Test //Проверим вызов метода searchGitHub() у нашего Репозитория
@@ -165,14 +165,14 @@ class SearchPresenterTest {
         `when`(response.body()).thenReturn(searchResponse)
         `when`(searchResponse.searchResults).thenReturn(searchResults)
         `when`(searchResponse.totalCount).thenReturn(101)
-        presenter.onDetach()
+        //presenter.onDetach()
         presenter.handleGitHubResponse(response)
         verify(viewContract, times(0)).displaySearchResults(searchResults, 101)
     }
 
     @Test
     fun onDetachHandleGitHubError_Test() {
-        presenter.onDetach()
+        //presenter.onDetach()
         presenter.handleGitHubError()
         verify(viewContract, times(0)).displayError()
     }
@@ -181,7 +181,7 @@ class SearchPresenterTest {
     fun onDetachHandleGitHubResponse_Test() {
         val response = mock(Response::class.java) as Response<SearchResponse?>
         `when`(response.isSuccessful).thenReturn(false)
-        presenter.onDetach()
+        //presenter.onDetach()
         presenter.handleGitHubResponse(response)
         verify(viewContract, times(0))
             .displayError("Response is null or unsuccessful")

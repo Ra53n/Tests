@@ -8,14 +8,12 @@ import android.widget.TextView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.geekbrains.tests.di.appModule
 import com.geekbrains.tests.view.search.MainActivity
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLooper.idleMainLooper

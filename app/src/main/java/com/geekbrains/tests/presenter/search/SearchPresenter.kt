@@ -4,7 +4,6 @@ import com.geekbrains.tests.model.SearchResponse
 import com.geekbrains.tests.presenter.RepositoryContract
 import com.geekbrains.tests.presenter.SchedulerProvider
 import com.geekbrains.tests.repository.RepositoryCallback
-import com.geekbrains.tests.view.ViewContract
 import com.geekbrains.tests.view.search.ViewSearchContract
 import retrofit2.Response
 
@@ -37,13 +36,13 @@ internal class SearchPresenter internal constructor(
             }
     }
 
-    override fun onAttach(view: ViewContract) {
-        viewContract = view as ViewSearchContract
-    }
-
-    override fun onDetach() {
-        viewContract = null
-    }
+//    override fun onAttach(view: ViewContract) {
+//        viewContract = view as ViewSearchContract
+//    }
+//
+//    override fun onDetach() {
+//        viewContract = null
+//    }
 
     override fun handleGitHubResponse(response: Response<SearchResponse?>?) {
         viewContract?.displayLoading(false)

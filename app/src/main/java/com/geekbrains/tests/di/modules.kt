@@ -9,17 +9,17 @@ import com.geekbrains.tests.repository.GitHubApi
 import com.geekbrains.tests.repository.GitHubRepository
 import com.geekbrains.tests.view.details.DetailsViewModel
 import com.geekbrains.tests.view.search.SearchViewModel
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 val appModule = module {
     single {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -34,7 +34,7 @@ val appModule = module {
 
     single<SchedulerProvider> { SearchSchedulerProvider() }
 
-    viewModel { SearchViewModel(get(), get()) }
+    viewModel { SearchViewModel(get()) }
 
     viewModel { DetailsViewModel() }
 

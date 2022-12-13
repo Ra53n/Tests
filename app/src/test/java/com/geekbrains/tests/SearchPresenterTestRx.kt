@@ -26,7 +26,7 @@ class SearchPresenterTestRx {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         presenter = SearchPresenter(repository, ScheduleProviderStub())
-        presenter.onAttach(viewContract)
+        //presenter.onAttach(viewContract)
     }
 
     @Test //Проверим вызов метода searchGitHub() у нашего Репозитория

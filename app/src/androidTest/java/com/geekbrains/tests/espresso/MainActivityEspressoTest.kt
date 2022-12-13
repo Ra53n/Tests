@@ -50,14 +50,14 @@ class MainActivityEspressoTest {
     }
 
     @Test
-    fun toDetailsButton_isCorrect(){
+    fun toDetailsButton_isCorrect() {
         val toDetailsButton = onView(withId(R.id.toDetailsActivityButton))
         toDetailsButton.check(matches(isDisplayed()))
         toDetailsButton.check(matches(withText("to details")))
     }
 
     @Test
-    fun resultText_isCorrect(){
+    fun resultText_isCorrect() {
         val resultTextView = onView(withId(R.id.totalCountTextView))
         resultTextView.check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
         onView(withId(R.id.searchEditText)).perform(click())
