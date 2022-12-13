@@ -10,11 +10,9 @@ import com.geekbrains.tests.repository.FakeGitHubRepository
 import com.geekbrains.tests.view.search.ScreenState
 import com.geekbrains.tests.view.search.SearchViewModel
 import io.reactivex.Observable
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 import org.junit.runner.RunWith
+import org.koin.core.context.stopKoin
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.times
@@ -107,8 +105,40 @@ class SearchViewModelTest {
         }
     }
 
+    @Test
+    fun liveData_TestReturnValuesIsNull() {
+        val observer = Observer<ScreenState> {}
+        val liveData = searchViewModel.subscribeToLiveData()
+        val error = Throwable(NULL_RESULT_VALUES_ERROR_TEXT)
+
+        Mockito.`when`(repository.searchGithub(SEARCH_QUERY)).thenReturn(
+            Observable.just(
+                SearchResponse(
+                    null,
+                    null
+                )
+            )
+        )
+
+        try {
+            liveData.observeForever(observer)
+            searchViewModel.searchGitHub(SEARCH_QUERY)
+            val value: ScreenState.Error = liveData.value as ScreenState.Error
+            Assert.assertEquals(value.error.message, error.message)
+        } finally {
+            liveData.removeObserver(observer)
+        }
+    }
+
+    @After
+    fun close() {
+        stopKoin()
+    }
+
     companion object {
         private const val SEARCH_QUERY = "some query"
         private const val ERROR_TEXT = "error"
+        private const val NULL_RESULT_VALUES_ERROR_TEXT = "Search results or total count are null"
+        private const val NULL_RESULT_ERROR_TEXT = "Response is null or unsuccessful"
     }
 }
