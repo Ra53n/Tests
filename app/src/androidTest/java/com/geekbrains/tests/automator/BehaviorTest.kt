@@ -26,7 +26,8 @@ class BehaviorTest {
     private val packageName = context.packageName
 
     @Before
-    fun setup() {4
+    fun setup() {
+        4
         uiDevice.pressHome()
 
         val intent = context.packageManager.getLaunchIntentForPackage(packageName)

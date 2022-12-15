@@ -119,7 +119,7 @@ class DetailsActivityTest {
         val count = TEST_NUMBER
         val intent = DetailsActivity.getIntent(context, count)
         val bundle = intent.extras
-        assertEquals(count, bundle?.getInt(DetailsActivity.TOTAL_COUNT_EXTRA, 0))
+        assertEquals(count, bundle?.getInt("TOTAL_COUNT_EXTRA", 0))
     }
 
     @After

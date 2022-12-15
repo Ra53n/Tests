@@ -5,12 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.geekbrains.tests.R
-import com.geekbrains.tests.presenter.details.PresenterDetailsContract
-import kotlinx.android.synthetic.main.activity_details.*
-import org.koin.android.ext.android.inject
-import java.util.*
 
-class DetailsActivity : AppCompatActivity(){
+class DetailsActivity : AppCompatActivity() {
 
     //private val presenter: PresenterDetailsContract by inject()
 

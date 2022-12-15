@@ -2,6 +2,7 @@ package com.geekbrains.tests
 
 import com.geekbrains.tests.model.SearchResponse
 import com.geekbrains.tests.model.SearchResult
+import com.geekbrains.tests.presenter.SchedulerProvider
 import com.geekbrains.tests.presenter.search.SearchPresenter
 import com.geekbrains.tests.repository.GitHubRepository
 import com.geekbrains.tests.view.search.ViewSearchContract
@@ -22,16 +23,19 @@ class SearchPresenterTest {
     private lateinit var repository: GitHubRepository
 
     @Mock
+    private lateinit var schedulerProvider: SchedulerProvider
+
+    @Mock
     private lateinit var viewContract: ViewSearchContract
 
     @Before
     fun setUp() {
         //Обязательно для аннотаций "@Mock"
         //Раньше было @RunWith(MockitoJUnitRunner.class) в аннотации к самому классу (SearchPresenterTest)
-        MockitoAnnotations.openMocks(this)
+        MockitoAnnotations.initMocks(this)
         //Создаем Презентер, используя моки Репозитория и Вью, проинициализированные строкой выше
-        presenter = SearchPresenter(repository)
-        presenter.onAttach(viewContract)
+        presenter = SearchPresenter(repository, schedulerProvider)
+        //presenter.onAttach(viewContract)
     }
 
     @Test //Проверим вызов метода searchGitHub() у нашего Репозитория
@@ -161,14 +165,14 @@ class SearchPresenterTest {
         `when`(response.body()).thenReturn(searchResponse)
         `when`(searchResponse.searchResults).thenReturn(searchResults)
         `when`(searchResponse.totalCount).thenReturn(101)
-        presenter.onDetach()
+        //presenter.onDetach()
         presenter.handleGitHubResponse(response)
         verify(viewContract, times(0)).displaySearchResults(searchResults, 101)
     }
 
     @Test
     fun onDetachHandleGitHubError_Test() {
-        presenter.onDetach()
+        //presenter.onDetach()
         presenter.handleGitHubError()
         verify(viewContract, times(0)).displayError()
     }
@@ -177,7 +181,7 @@ class SearchPresenterTest {
     fun onDetachHandleGitHubResponse_Test() {
         val response = mock(Response::class.java) as Response<SearchResponse?>
         `when`(response.isSuccessful).thenReturn(false)
-        presenter.onDetach()
+        //presenter.onDetach()
         presenter.handleGitHubResponse(response)
         verify(viewContract, times(0))
             .displayError("Response is null or unsuccessful")

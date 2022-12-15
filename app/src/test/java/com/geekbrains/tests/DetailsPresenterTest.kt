@@ -18,7 +18,7 @@ class DetailsPresenterTest {
 
     @Before
     fun setUp() {
-        MockitoAnnotations.openMocks(this)
+        MockitoAnnotations.initMocks(this)
         presenter = DetailsPresenter()
         presenter.onAttach(viewContract)
     }
